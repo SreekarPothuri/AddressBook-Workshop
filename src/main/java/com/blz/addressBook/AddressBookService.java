@@ -154,4 +154,20 @@ public class AddressBookService {
 		String state = sc.nextLine();
 		contactList.stream().filter(n -> n.getState().equals(state)).forEach(i -> System.out.println(i));
 	}
+
+	public void countContactsByCity() {
+		int count = 0;
+		System.out.println("Enter City Name : ");
+		String city = sc.nextLine();
+		count = (int) contactList.stream().filter(n -> n.getCity().equals(city)).count();
+		System.out.println(count);
+	}
+
+	public void countContactsByState() {
+		int count = 0;
+		System.out.println("Enter State Name : ");
+		String state = sc.nextLine();
+		count = (int) contactList.stream().filter(n -> n.getState().equals(state)).count();
+		System.out.println(count);
+	}
 }
