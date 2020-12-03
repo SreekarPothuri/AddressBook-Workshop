@@ -10,6 +10,7 @@ public class AddressBookMain {
 	static Map<String, AddressBookMain> addressBookObj = new HashMap();
 	static AddressBookMain addressobj = new AddressBookMain();
 	static Scanner sc = new Scanner(System.in);
+	private static String addressBookName;
 
 	public static void addAddressBook() {
 		Scanner input = new Scanner(System.in);
@@ -57,11 +58,12 @@ public class AddressBookMain {
 		do {
 			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Delete Contact "
 					+ "\n4.Add Multiple Contacts \n5.Search By City or State \n6.View By City or State"
-					+ "\n7.Count By City or State \n8.Sort Contacts Alphabetically \n9.Exit");
+					+ "\n7.Count By City or State \n8.Sort Contacts Alphabetically \n9.Sort Contacts By City,State or Zip"
+					+ "\n10.Read or Write into File \n11.Exit");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
-				addressBook.addContact();
+				addressBook.addContact(addressBookName);
 				break;
 			case 2:
 				if (!addressBook.contactList.isEmpty())
@@ -152,6 +154,17 @@ public class AddressBookMain {
 				}
 				break;
 			case 10:
+				System.out.println("1)Read Data From File   2)Add Contact To File");
+				int ch = sc.nextInt();
+				if (ch == 1) {
+					addressBook.readDataFromFile();
+				} else if (ch == 2) {
+					addressBook.addContact(addressBookName);
+				} else {
+					System.out.println("Choose correct option");
+				}
+				break;
+			case 11:
 				System.out.println("Exited to main menu!!");
 				addAddressBook();
 				break;
@@ -159,7 +172,7 @@ public class AddressBookMain {
 				System.out.println("Choose correct option from above mentioned option only!!");
 				break;
 			}
-		} while (choice != 10);
+		} while (choice != 11);
 	}
 
 	public static void main(String[] args) {
