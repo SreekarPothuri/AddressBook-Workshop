@@ -142,4 +142,16 @@ public class AddressBookService {
 		String state = sc.nextLine();
 		contactList.stream().filter(n -> n.getState().equals(state)).forEach(i -> System.out.println(i.firstName));
 	}
+
+	public void viewContactByCity() {
+		System.out.println("Enter City Name:");
+		String city = sc.nextLine();
+		contactList.stream().filter(n -> n.getCity().equals(city)).forEach(i -> System.out.println(i));
+	}
+
+	public void viewContactByState() {
+		System.out.println("Enter State Name:");
+		String state = sc.nextLine();
+		contactList.stream().filter(n -> n.getState().equals(state)).forEach(i -> System.out.println(i));
+	}
 }
