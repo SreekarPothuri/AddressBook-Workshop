@@ -130,6 +130,28 @@ public class AddressBookMain {
 					System.out.println("Address Book is empty");
 				break;
 			case 9:
+				if (!addressBook.contactList.isEmpty()) {
+					System.out.println("1)Sort Contacts By City   2)Sort Contacts By State	3)Sort Contacts by Zip");
+					int ch = sc.nextInt();
+					switch (ch) {
+					case 1:
+						addressBook.sortEntriesByCity();
+						break;
+					case 2:
+						addressBook.sortEntriesByState();
+						break;
+					case 3:
+						addressBook.sortEntriesByZip();
+						break;
+					default:
+						System.out.println("Choose right choice from above mentioned options");
+						break;
+					}
+				} else {
+					System.out.println("Address book is empty");
+				}
+				break;
+			case 10:
 				System.out.println("Exited to main menu!!");
 				addAddressBook();
 				break;
@@ -137,7 +159,7 @@ public class AddressBookMain {
 				System.out.println("Choose correct option from above mentioned option only!!");
 				break;
 			}
-		} while (choice != 9);
+		} while (choice != 10);
 	}
 
 	public static void main(String[] args) {
