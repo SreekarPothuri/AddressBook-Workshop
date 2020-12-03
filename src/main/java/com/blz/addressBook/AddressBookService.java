@@ -39,49 +39,48 @@ public class AddressBookService {
 		for (int id = 0; id < contactList.size(); id++) {
 			if (contactList.get(id).getFirstName().equals(firstNameToEdit)) {
 				System.out.println("Index: " + contactList.get(id));
-				Scanner editInput = new Scanner(System.in);
 				System.out.println("Enter your choice: \n1.First Name \n2.Last Name \n3.Address \n4.City \n5.State "
 						+ "\n6.Zip Code \n7.Phone Number \n8.EmailId");
 				int choice = sc.nextInt();
 				switch (choice) {
 				case 1:
 					System.out.println("Enter new First Name: ");
-					String newFirstName = editInput.nextLine();
+					String newFirstName = sc.nextLine();
 					contactList.get(id).setFirstName(newFirstName);
 					break;
 				case 2:
 					System.out.println("Enter new Last Name: ");
-					String newLastName = editInput.nextLine();
+					String newLastName = sc.nextLine();
 					contactList.get(id).setLastName(newLastName);
 					break;
 				case 3:
 					System.out.println("Enter new Address: ");
-					String newAddress = editInput.nextLine();
+					String newAddress = sc.nextLine();
 					contactList.get(id).setAddress(newAddress);
 					break;
 				case 4:
 					System.out.println("Enter new City: ");
-					String newCity = editInput.nextLine();
+					String newCity = sc.nextLine();
 					contactList.get(id).setCity(newCity);
 					break;
 				case 5:
 					System.out.println("Enter new State: ");
-					String newState = editInput.nextLine();
+					String newState = sc.nextLine();
 					contactList.get(id).setState(newState);
 					break;
 				case 6:
 					System.out.println("Enter new ZipCode: ");
-					int newZip = editInput.nextInt();
+					int newZip = sc.nextInt();
 					contactList.get(id).setZip(newZip);
 					break;
 				case 7:
 					System.out.println("Enter new Phone Number: ");
-					long newPhoneNum = editInput.nextLong();
+					long newPhoneNum = sc.nextLong();
 					contactList.get(id).setPhoneNum(newPhoneNum);
 					break;
 				case 8:
 					System.out.println("Enter new Email Id: ");
-					String newEmail = editInput.nextLine();
+					String newEmail = sc.nextLine();
 					contactList.get(id).setEmail(newEmail);
 					break;
 				default:
@@ -98,7 +97,6 @@ public class AddressBookService {
 	public void deleteContact() {
 		for (int i = 0; i < contactList.size(); i++) {
 			System.out.println("Enter First name of contact to delete: ");
-			Scanner sc = new Scanner(System.in);
 			String deletefirstName = sc.nextLine();
 			if (contactList.get(i).getFirstName().equalsIgnoreCase(deletefirstName)) {
 				contactList.remove(i);
