@@ -178,4 +178,22 @@ public class AddressBookService {
 				.collect(Collectors.toList());
 		contactList.forEach(i -> System.out.println(i));
 	}
+
+	public void sortEntriesByCity() {
+		contactList = contactList.stream().sorted(Comparator.comparing(ContactDetails::getCity))
+				.collect(Collectors.toList());
+		contactList.forEach(i -> System.out.println(i));
+	}
+
+	public void sortEntriesByState() {
+		contactList = contactList.stream().sorted(Comparator.comparing(ContactDetails::getState))
+				.collect(Collectors.toList());
+		contactList.forEach(i -> System.out.println(i));
+	}
+
+	public void sortEntriesByZip() {
+		contactList = contactList.stream().sorted(Comparator.comparing(ContactDetails::getZip))
+				.collect(Collectors.toList());
+		contactList.forEach(i -> System.out.println(i));
+	}
 }
