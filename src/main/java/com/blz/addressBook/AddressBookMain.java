@@ -56,7 +56,7 @@ public class AddressBookMain {
 
 		do {
 			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Delete Contact "
-					+ "\n4.Add Multiple Contacts \n5.Exit");
+					+ "\n4.Add Multiple Contacts \n5.Search By City or State \n6.Exit");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -78,6 +78,21 @@ public class AddressBookMain {
 				addressBook.addMultipleContacts();
 				break;
 			case 5:
+				if (!addressBook.contactList.isEmpty()) {
+					System.out.println("1)Search By City   2)Search By State");
+					int ch = sc.nextInt();
+					if (ch == 1) {
+						addressBook.searchContactByCity();
+					} else if (ch == 2) {
+						addressBook.searchContactByState();
+					} else {
+						System.out.println("Choose correct option");
+					}
+				} else {
+					System.out.println("Address book is empty");
+				}
+				break;
+			case 6:
 				System.out.println("Exited to main menu!!");
 				addAddressBook();
 				break;
@@ -85,7 +100,7 @@ public class AddressBookMain {
 				System.out.println("Choose correct option from above mentioned option only!!");
 				break;
 			}
-		} while (choice != 5);
+		} while (choice != 6);
 	}
 
 	public static void main(String[] args) {
