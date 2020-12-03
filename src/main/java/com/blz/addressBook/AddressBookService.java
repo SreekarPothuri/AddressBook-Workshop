@@ -1,5 +1,12 @@
 package com.blz.addressBook;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,8 +19,9 @@ public class AddressBookService {
 	List<ContactDetails> contactList = new ArrayList<ContactDetails>();
 	ContactDetails newEntry;
 	boolean isExist;
+	private String addressBookName;
 
-	public void addContact() {
+	public void addContact(String addressBookName) {
 		isExist = false;
 		System.out.println("Enter First Name: ");
 		String firstName = sc.nextLine();
@@ -45,6 +53,7 @@ public class AddressBookService {
 		if (!isExist) {
 			newEntry = new ContactDetails(firstName, lastName, address, city, state, zip, phoneNum, email);
 			contactList.add(newEntry);
+			addDataToFile(firstName, lastName, address, city, state, phoneNum, zip, email, addressBookName);
 		}
 		System.out.println(contactList);
 	}
@@ -128,7 +137,7 @@ public class AddressBookService {
 		sc.nextLine();
 		int count = 1;
 		while (count <= noOfPersons) {
-			addContact();
+			addContact(addressBookName);
 			count++;
 		}
 	}
@@ -195,5 +204,41 @@ public class AddressBookService {
 		contactList = contactList.stream().sorted(Comparator.comparing(ContactDetails::getZip))
 				.collect(Collectors.toList());
 		contactList.forEach(i -> System.out.println(i));
+	}
+
+	public void addDataToFile(String firstName, String lastName, String address, String city, String state,
+			long phoneNumber, int zip, String email, String addressBookName) {
+		System.out.println("Enter name for txt written file : ");
+		String fileName = sc.nextLine();
+		File file = new File("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".txt");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write("Contact:" + "\n1.First name: " + firstName + "\n2.Last name: " + lastName
+					+ "\n3.Address: " + address + "\n4.City: " + city + "\n5.State: " + state + "\n6.Phone number: "
+					+ phoneNumber + "\n7.Zip: " + zip + "\n8.email: " + email + "\n");
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void readDataFromFile() {
+		System.out.println("Enter address book name : ");
+		String fileName = sc.nextLine();
+		Path filePath = Paths
+				.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".txt");
+		try {
+			Files.lines(filePath).map(line -> line.trim()).forEach(line -> System.out.println(line));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
