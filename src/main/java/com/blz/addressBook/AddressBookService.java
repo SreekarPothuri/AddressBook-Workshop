@@ -8,8 +8,11 @@ public class AddressBookService {
 
 	Scanner sc = new Scanner(System.in);
 	List<ContactDetails> contactList = new ArrayList<ContactDetails>();
+	ContactDetails newEntry;
+	boolean isExist;
 
 	public void addContact() {
+		isExist = false;
 		System.out.println("Enter First Name: ");
 		String firstName = sc.nextLine();
 		System.out.println("Enter Last Name: ");
@@ -27,9 +30,20 @@ public class AddressBookService {
 		sc.nextLine();
 		System.out.println("Enter your emailId: ");
 		String email = sc.nextLine();
-
-		ContactDetails contact = new ContactDetails(firstName, lastName, address, city, state, zip, phoneNum, email);
-		contactList.add(contact);
+		if (contactList.size() > 0) {
+			for (ContactDetails details : contactList) {
+				newEntry = details;
+				if (firstName.equals(newEntry.firstName) && lastName.equals(newEntry.lastName)) {
+					System.out.println("Contact " + newEntry.firstName + " " + newEntry.lastName + " already exists");
+					isExist = true;
+					break;
+				}
+			}
+		}
+		if (!isExist) {
+			newEntry = new ContactDetails(firstName, lastName, address, city, state, zip, phoneNum, email);
+			contactList.add(newEntry);
+		}
 		System.out.println(contactList);
 	}
 
