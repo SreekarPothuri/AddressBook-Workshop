@@ -39,56 +39,55 @@ public class AddressBookService {
 		for (int id = 0; id < contactList.size(); id++) {
 			if (contactList.get(id).getFirstName().equals(firstNameToEdit)) {
 				System.out.println("Index: " + contactList.get(id));
+				Scanner editInput = new Scanner(System.in);
 				System.out.println("Enter your choice: \n1.First Name \n2.Last Name \n3.Address \n4.City \n5.State "
 						+ "\n6.Zip Code \n7.Phone Number \n8.EmailId");
 				int choice = sc.nextInt();
 				switch (choice) {
 				case 1:
 					System.out.println("Enter new First Name: ");
-					String newFirstName = sc.nextLine();
+					String newFirstName = editInput.nextLine();
 					contactList.get(id).setFirstName(newFirstName);
 					break;
 				case 2:
 					System.out.println("Enter new Last Name: ");
-					String newLastName = sc.nextLine();
+					String newLastName = editInput.nextLine();
 					contactList.get(id).setLastName(newLastName);
 					break;
 				case 3:
 					System.out.println("Enter new Address: ");
-					String newAddress = sc.nextLine();
+					String newAddress = editInput.nextLine();
 					contactList.get(id).setAddress(newAddress);
 					break;
 				case 4:
 					System.out.println("Enter new City: ");
-					String newCity = sc.nextLine();
+					String newCity = editInput.nextLine();
 					contactList.get(id).setCity(newCity);
 					break;
 				case 5:
 					System.out.println("Enter new State: ");
-					String newState = sc.nextLine();
+					String newState = editInput.nextLine();
 					contactList.get(id).setState(newState);
 					break;
 				case 6:
 					System.out.println("Enter new ZipCode: ");
-					int newZip = sc.nextInt();
+					int newZip = editInput.nextInt();
 					contactList.get(id).setZip(newZip);
 					break;
 				case 7:
 					System.out.println("Enter new Phone Number: ");
-					long newPhoneNum = sc.nextLong();
+					long newPhoneNum = editInput.nextLong();
 					contactList.get(id).setPhoneNum(newPhoneNum);
 					break;
 				case 8:
 					System.out.println("Enter new Email Id: ");
-					String newEmail = sc.nextLine();
+					String newEmail = editInput.nextLine();
 					contactList.get(id).setEmail(newEmail);
 					break;
 				default:
 					System.out.println("Choose right choice!!");
 					break;
 				}
-			} else {
-				System.out.println("No contact with such name exists!!");
 			}
 		}
 		System.out.println(contactList);
