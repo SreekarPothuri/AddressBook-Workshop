@@ -10,7 +10,8 @@ public class AddressBookMain {
 		int choice;
 		System.out.println("Welcome to Address Book");
 		do {
-			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Delete Contact \n4.Exit");
+			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Delete Contact "
+										+ "\n4.Add Multiple Contacts \n5.Exit");
 			Scanner sc = new Scanner(System.in);
 			choice = sc.nextInt();
 			switch (choice) {
@@ -30,12 +31,15 @@ public class AddressBookMain {
 					System.out.println("Address Book is empty");
 				break;
 			case 4:
+				addressBook.addMultipleContacts();
+				break;
+			case 5:
 				System.out.println("Exited Successfully!");
 				break;
 			default:
 				System.out.println("Choose correct option from above mentioned option only!!");
 				break;
 			}
-		} while (choice != 4);
+		} while (choice != 5);
 	}
 }
