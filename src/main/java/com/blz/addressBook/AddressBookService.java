@@ -94,4 +94,18 @@ public class AddressBookService {
 		}
 		System.out.println(contactList);
 	}
+
+	public void deleteContact() {
+		for (int i = 0; i < contactList.size(); i++) {
+			System.out.println("Enter First name of contact to delete: ");
+			Scanner sc = new Scanner(System.in);
+			String deletefirstName = sc.nextLine();
+			if (contactList.get(i).getFirstName().equalsIgnoreCase(deletefirstName)) {
+				contactList.remove(i);
+				System.out.println(deletefirstName + " deleted successfully!");
+			} else {
+				System.out.println("No such contact exists!!");
+			}
+		}
+	}
 }
