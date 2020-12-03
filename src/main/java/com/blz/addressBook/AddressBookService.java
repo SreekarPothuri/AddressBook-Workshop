@@ -1,8 +1,10 @@
 package com.blz.addressBook;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddressBookService {
 
@@ -169,5 +171,11 @@ public class AddressBookService {
 		String state = sc.nextLine();
 		count = (int) contactList.stream().filter(n -> n.getState().equals(state)).count();
 		System.out.println(count);
+	}
+
+	public void sortContactByName() {
+		contactList = contactList.stream().sorted(Comparator.comparing(ContactDetails::getFirstName))
+				.collect(Collectors.toList());
+		contactList.forEach(i -> System.out.println(i));
 	}
 }
