@@ -130,4 +130,16 @@ public class AddressBookService {
 			count++;
 		}
 	}
+
+	public void searchContactByCity() {
+		System.out.println("Enter City Name:");
+		String city = sc.nextLine();
+		contactList.stream().filter(n -> n.getCity().equals(city)).forEach(i -> System.out.println(i.firstName));
+	}
+
+	public void searchContactByState() {
+		System.out.println("Enter State Name:");
+		String state = sc.nextLine();
+		contactList.stream().filter(n -> n.getState().equals(state)).forEach(i -> System.out.println(i.firstName));
+	}
 }
