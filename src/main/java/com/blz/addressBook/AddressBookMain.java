@@ -1,10 +1,35 @@
 package com.blz.addressBook;
 
+import java.util.Scanner;
+
 public class AddressBookMain {
 
 	static AddressBookService addressBook = new AddressBookService();
 
 	public static void main(String[] args) {
-		addressBook.addContact();
+		int choice;
+		System.out.println("Welcome to Address Book");
+		do {
+			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Exit");
+			Scanner sc = new Scanner(System.in);
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				addressBook.addContact();
+				break;
+			case 2:
+				if (!addressBook.contactList.isEmpty())
+					addressBook.editContact();
+				else
+					System.out.println("Address Book is empty");
+				break;
+			case 3:
+				System.out.println("Exited Successfully!");
+				break;
+			default:
+				System.out.println("Choose correct option from above mentioned option only!!");
+				break;
+			}
+		} while (choice != 3);
 	}
 }
