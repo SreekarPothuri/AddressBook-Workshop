@@ -21,6 +21,39 @@
       "zip": "522124",
       "phone": "9874563210",
       "email": "saikv@gmail.com"
+    },
+    {
+      "firstName": "Yeswanth",
+      "lastName": "Kothuri",
+      "address": "Bavanagar Colony",
+      "city": "Ponnur",
+      "state": "AP",
+      "zip": 522124,
+      "phoneNum": 987654421,
+      "email": "yeswanth@gmail.com",
+      "id": 3
+    },
+    {
+      "firstName": "Abhinav",
+      "lastName": "Pulikonda",
+      "address": "GBC Road",
+      "city": "Ponnur",
+      "state": "AP",
+      "zip": 522124,
+      "phoneNum": 988944321,
+      "email": "abhi@gmail.com",
+      "id": 4
+    },
+    {
+      "firstName": "Jagadeesh",
+      "lastName": "Chilla",
+      "address": "Bandar",
+      "city": "Machillipatnam",
+      "state": "AP",
+      "zip": 510214,
+      "phoneNum": 985654321,
+      "email": "jaggu@gmail.com",
+      "id": 5
     }
   ]
 }
