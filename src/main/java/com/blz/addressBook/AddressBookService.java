@@ -28,7 +28,21 @@ public class AddressBookService {
 	ContactDetails newEntry;
 	boolean isExist;
 	private String addressBookName;
+	private static AddressBookDBService addressBookDBService;
+	
+	public enum IOService{
+		FILE_IO,DB_IO,REST_IO,CONSOLE_IO
+	}
 
+	public AddressBookService() {
+		addressBookDBService = AddressBookDBService.getInstance();
+	}
+
+	public AddressBookService(List<ContactDetails> contactList) {
+		this();
+		this.contactList = contactList;
+	}
+	
 	public void addContact(String addressBookName) throws IOException {
 		isExist = false;
 		System.out.println("Enter First Name: ");
@@ -334,5 +348,11 @@ public class AddressBookService {
 			System.out.println("Phone no : " + details.phoneNum);
 			System.out.println("Email : " + details.email);
 		}
+	}
+	
+	public List<ContactDetails> readAddressBookData(IOService ioservice) throws AddressBookException {
+		if (ioservice.equals(IOService.DB_IO))
+			this.contactList = addressBookDBService.readData();
+		return this.contactList;
 	}
 }
