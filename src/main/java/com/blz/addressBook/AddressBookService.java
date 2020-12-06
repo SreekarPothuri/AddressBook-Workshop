@@ -404,4 +404,8 @@ public class AddressBookService {
 			long phoneNum, String email) throws AddressBookException {
 		contactList.add(addressBookDBService.addNewContact(firstName, lastName, address, city, state, zip, phoneNum, email));
 	}
+	
+	public void addMultipleContactsToDBUsingThreads(List<ContactDetails> record) {
+		addressBookDBService.addMultipleContactsToDBUsingThread(record);
+	}
 }
