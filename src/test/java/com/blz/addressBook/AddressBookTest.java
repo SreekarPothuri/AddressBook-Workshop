@@ -4,20 +4,45 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.blz.addressBook.AddressBookService.IOService;
+import com.google.gson.Gson;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 public class AddressBookTest {
 
+	private static final IOService REST_IO = null;
 	private static AddressBookService addressBook;
+	
+	@AfterClass
+	public static void nullObj() {
+		addressBook = null;
+	}
+	
+	@Before
+	public void setup() {
+		RestAssured.baseURI = "http://localhost";
+		RestAssured.port = 3000;
+	}
 
 	@BeforeClass
 	public static void createAddressBookObj() {
 		addressBook = new AddressBookService();
 		System.out.println("Welcome to the Address Book System.. ");
+	}
+	
+	private ContactDetails[] getAddressbookList() {
+		Response response = RestAssured.get("/addressBookWS");
+		System.out.println("Adddressbook entries in JsonServer :\n" + response.asString());
+		ContactDetails[] arrayOfPerson = new Gson().fromJson(response.asString(), ContactDetails[].class);
+		return arrayOfPerson;
 	}
 
 	@Test
@@ -67,5 +92,13 @@ public class AddressBookTest {
 		boolean result2 = addressBook.checkUpdatedRecordSyncWithDB("Naveen");
 		Assert.assertTrue(result1);
 		Assert.assertTrue(result2);
+	}
+	
+	@Test
+	public void givenAddressbookDataInJsonServer_WhenRetrieved_ShouldMatchCount() {
+		ContactDetails[] arrayOfPerson = getAddressbookList();
+		addressBook = new AddressBookService(Arrays.asList(arrayOfPerson));
+		long entries = addressBook.countEntries(IOService.REST_IO);
+		Assert.assertEquals(2, entries);
 	}
 }
