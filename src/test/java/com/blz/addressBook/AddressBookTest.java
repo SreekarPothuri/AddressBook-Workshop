@@ -32,4 +32,11 @@ public class AddressBookTest {
 		boolean result = addressBook.checkUpdatedRecordSyncWithDB("Anudeep");
 		Assert.assertFalse(result);
 	}
+	
+	@Test
+	public void givenAddressBook_WhenRetrieved_ShouldMatchCountInGivenRange() throws AddressBookException {
+		List<ContactDetails> addressBookData = addressBook.readAddressBookData(IOService.DB_IO, "2018-02-14",
+				"2020-06-02");
+		Assert.assertEquals(2, addressBookData.size());
+	}
 }
