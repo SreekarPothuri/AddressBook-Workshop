@@ -2,6 +2,7 @@ package com.blz.addressBook;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +14,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 public class AddressBookService {
 
 	Scanner sc = new Scanner(System.in);
@@ -21,7 +25,7 @@ public class AddressBookService {
 	boolean isExist;
 	private String addressBookName;
 
-	public void addContact(String addressBookName) {
+	public void addContact(String addressBookName) throws IOException {
 		isExist = false;
 		System.out.println("Enter First Name: ");
 		String firstName = sc.nextLine();
@@ -54,6 +58,11 @@ public class AddressBookService {
 			newEntry = new ContactDetails(firstName, lastName, address, city, state, zip, phoneNum, email);
 			contactList.add(newEntry);
 			addDataToFile(firstName, lastName, address, city, state, phoneNum, zip, email, addressBookName);
+			try {
+				addDataToCSVFile(addressBookName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println(contactList);
 	}
@@ -131,7 +140,7 @@ public class AddressBookService {
 		}
 	}
 
-	public void addMultipleContacts() {
+	public void addMultipleContacts() throws IOException {
 		System.out.println("Enter number of persons to add to Address Book: ");
 		int noOfPersons = sc.nextInt();
 		sc.nextLine();
@@ -238,6 +247,50 @@ public class AddressBookService {
 		try {
 			Files.lines(filePath).map(line -> line.trim()).forEach(line -> System.out.println(line));
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addDataToCSVFile(String addressBookName) throws IOException {
+		System.out.println("Enter name for csv file to add data: ");
+		String fileName = sc.nextLine();
+		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\" + fileName + ".csv");
+
+		if (Files.notExists(filePath))
+			Files.createFile(filePath);
+		File file = new File(String.valueOf(filePath));
+
+		try {
+			FileWriter outputfile = new FileWriter(file, true);
+			CSVWriter writer = new CSVWriter(outputfile);
+			List<String[]> data = new ArrayList<>();
+			for (ContactDetails details : contactList) {
+				data.add(new String[] { "Contact:" + "\n1.First name: " + details.firstName + "\n2.Last name: "
+						+ details.lastName + "\n3.Address: " + details.address + "\n4.City: " + details.city
+						+ "\n5.State: " + details.state + "\n6.Phone number: " + details.phoneNum + "\n7.Zip: "
+						+ details.zip + "\n8.email: " + details.email + "\n" });
+			}
+			writer.writeAll(data);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void readDataFromCSVFile() {
+		System.out.println("Enter csv filename to read data: ");
+		String fileName = sc.nextLine();
+		CSVReader reader = null;
+		try {
+			reader = new CSVReader(new FileReader("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\" + fileName + ".csv"));
+			String[] nextLine;
+			while ((nextLine = reader.readNext()) != null) {
+				for (String token : nextLine) {
+					System.out.println(token);
+				}
+				System.out.print("\n");
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
