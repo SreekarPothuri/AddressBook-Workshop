@@ -29,9 +29,9 @@ public class AddressBookService {
 	boolean isExist;
 	private String addressBookName;
 	private static AddressBookDBService addressBookDBService;
-	
-	public enum IOService{
-		FILE_IO,DB_IO,REST_IO,CONSOLE_IO
+
+	public enum IOService {
+		FILE_IO, DB_IO, REST_IO, CONSOLE_IO
 	}
 
 	public AddressBookService() {
@@ -42,7 +42,7 @@ public class AddressBookService {
 		this();
 		this.contactList = contactList;
 	}
-	
+
 	public void addContact(String addressBookName) throws IOException {
 		isExist = false;
 		System.out.println("Enter First Name: ");
@@ -277,7 +277,8 @@ public class AddressBookService {
 	public void addDataToCSVFile(String addressBookName) throws IOException {
 		System.out.println("Enter name for csv file to add data: ");
 		String fileName = sc.nextLine();
-		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".csv");
+		Path filePath = Paths
+				.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".csv");
 
 		if (Files.notExists(filePath))
 			Files.createFile(filePath);
@@ -305,8 +306,8 @@ public class AddressBookService {
 		String fileName = sc.nextLine();
 		CSVReader reader = null;
 		try {
-			reader = new CSVReader(
-					new FileReader("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".csv"));
+			reader = new CSVReader(new FileReader(
+					"F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".csv"));
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				for (String token : nextLine) {
@@ -322,7 +323,8 @@ public class AddressBookService {
 	public void addDataToJSONFile(String addressBookName) throws IOException {
 		System.out.println("Enter name for json file to add data : ");
 		String fileName = sc.nextLine();
-		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".json");
+		Path filePath = Paths
+				.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".json");
 		Gson gson = new Gson();
 		String json = gson.toJson(contactList);
 		FileWriter writer = new FileWriter(String.valueOf(filePath));
@@ -333,7 +335,8 @@ public class AddressBookService {
 	public void readDataFromJsonFile() throws FileNotFoundException {
 		System.out.println("Enter Json filename to read data: ");
 		String fileName = sc.nextLine();
-		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".json");
+		Path filePath = Paths
+				.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".json");
 		Gson gson = new Gson();
 		BufferedReader br = new BufferedReader(new FileReader(String.valueOf(filePath)));
 		ContactDetails[] data = gson.fromJson(br, ContactDetails[].class);
@@ -349,10 +352,34 @@ public class AddressBookService {
 			System.out.println("Email : " + details.email);
 		}
 	}
-	
+
 	public List<ContactDetails> readAddressBookData(IOService ioservice) throws AddressBookException {
 		if (ioservice.equals(IOService.DB_IO))
-			this.contactList = addressBookDBService.readData();
+			return this.contactList = addressBookDBService.readData();
 		return this.contactList;
 	}
+
+	public void updateRecord(String firstname, String address) throws AddressBookException {
+		int result = addressBookDBService.updateAddressBookData(firstname, address);
+		if (result == 0)
+			return;
+		ContactDetails addressBookData = this.getAddressBookData(firstname);
+		if (addressBookData != null)
+			addressBookData.address = address;
+	}
+
+	public boolean checkUpdatedRecordSyncWithDB(String firstname) throws AddressBookException {
+		try {
+			List<ContactDetails> addressBookData = addressBookDBService.getAddressBookData(firstname);
+			return addressBookData.get(0).equals(getAddressBookData(firstname));
+		} catch (AddressBookException e) {
+			throw new AddressBookException(e.getMessage(), AddressBookException.ExceptionType.DATABASE_EXCEPTION);
+		}
+	}
+
+	private ContactDetails getAddressBookData(String firstname) {
+		return this.contactList.stream().filter(addressBookItem -> addressBookItem.firstName.equals(firstname))
+				.findFirst().orElse(null);
+	}
+
 }
