@@ -40,10 +40,13 @@ public class AddressBookService {
 	}
 
 	public AddressBookService(List<ContactDetails> contactList) {
-		this();
-		this.contactList = contactList;
+		this.contactList = new ArrayList<>(contactList);
 	}
 
+	/*
+	 * public AddressBookService(List<ContactDetails> contactList) { this();
+	 * this.contactList = contactList; }
+	 */
 	public void addContact(String addressBookName) throws IOException {
 		isExist = false;
 		System.out.println("Enter First Name: ");
@@ -407,5 +410,9 @@ public class AddressBookService {
 	
 	public void addMultipleContactsToDBUsingThreads(List<ContactDetails> record) {
 		addressBookDBService.addMultipleContactsToDBUsingThread(record);
+	}
+	
+	public long countEntries(IOService restIo) {
+		return contactList.size();
 	}
 }
