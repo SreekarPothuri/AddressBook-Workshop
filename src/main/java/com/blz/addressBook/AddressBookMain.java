@@ -1,5 +1,6 @@
 package com.blz.addressBook;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
 	private static String addressBookName;
 
-	public static void addAddressBook() {
+	public static void addAddressBook() throws IOException {
 		Scanner input = new Scanner(System.in);
 		System.out.println(
 				"Enter choice \n1.Create new addressbook " + "\n2.Add contacts into existing address Book \n3.Exit ");
@@ -51,7 +52,7 @@ public class AddressBookMain {
 		}
 	}
 
-	public static void entries() {
+	public static void entries() throws IOException {
 		int choice;
 		System.out.println("Welcome to Address Book");
 
@@ -59,7 +60,7 @@ public class AddressBookMain {
 			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Delete Contact "
 					+ "\n4.Add Multiple Contacts \n5.Search By City or State \n6.View By City or State"
 					+ "\n7.Count By City or State \n8.Sort Contacts Alphabetically \n9.Sort Contacts By City,State or Zip"
-					+ "\n10.Read or Write into File \n11.Exit");
+					+ "\n10.Read or Write into File \n11.Read or write Data into CSV File \n12.Exit");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -160,11 +161,24 @@ public class AddressBookMain {
 					addressBook.readDataFromFile();
 				} else if (ch == 2) {
 					addressBook.addContact(addressBookName);
+					System.out.println("Successfully Added to text File!!");
 				} else {
 					System.out.println("Choose correct option");
 				}
 				break;
 			case 11:
+				System.out.println("1)Read Data From CSV File   2)Add Contact To CSV File");
+				int select = sc.nextInt();
+				if (select == 1) {
+					addressBook.readDataFromCSVFile();
+				} else if (select == 2) {
+					addressBook.addContact(addressBookName);
+					System.out.println("Successfully Added to CSV File!!");
+				} else {
+					System.out.println("Choose correct option");
+				}
+				break;
+			case 12:
 				System.out.println("Exited to main menu!!");
 				addAddressBook();
 				break;
@@ -172,10 +186,10 @@ public class AddressBookMain {
 				System.out.println("Choose correct option from above mentioned option only!!");
 				break;
 			}
-		} while (choice != 11);
+		} while (choice != 12);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		addAddressBook();
 	}
 }
