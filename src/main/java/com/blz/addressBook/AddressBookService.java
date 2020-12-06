@@ -415,4 +415,8 @@ public class AddressBookService {
 	public long countEntries(IOService restIo) {
 		return contactList.size();
 	}
+	
+	public void addContactToAddressbook(ContactDetails addressBookData, IOService restIo) {
+		contactList.add(addressBookData);
+	}
 }
