@@ -44,4 +44,13 @@ public class AddressBookTest {
 	public void givenAddresBook_WhenRetrieved_ShouldReturnCountOfCity() throws AddressBookException {
 		Assert.assertEquals(1, addressBook.readAddressBookData("count", "Ponnur"));
 	}
+	
+	@Test
+	public void givenAddresBookDetails_WhenAdded_ShouldSyncWithDB() throws AddressBookException {
+		addressBook.readAddressBookData(IOService.DB_IO);
+		addressBook.addNewContact("Sreekar", "Pothuri", "Ring Road", "Ponnur", "Andhra Pradesh", 522124, 879061343,
+				"pothuri98@gmail.com");
+		boolean result = addressBook.checkUpdatedRecordSyncWithDB("Sreekar");
+		Assert.assertFalse(result);
+	}
 }
