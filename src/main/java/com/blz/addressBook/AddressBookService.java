@@ -399,4 +399,9 @@ public class AddressBookService {
 	public int readAddressBookData(String function, String city) throws AddressBookException {
 		return addressBookDBService.readDataBasedOnCity(function, city);
 	}
+
+	public void addNewContact(String firstName, String lastName, String address, String city, String state, int zip,
+			long phoneNum, String email) throws AddressBookException {
+		contactList.add(addressBookDBService.addNewContact(firstName, lastName, address, city, state, zip, phoneNum, email));
+	}
 }
