@@ -1,6 +1,7 @@
 package com.blz.addressBook;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -52,5 +53,19 @@ public class AddressBookTest {
 				"pothuri98@gmail.com");
 		boolean result = addressBook.checkUpdatedRecordSyncWithDB("Sreekar");
 		Assert.assertFalse(result);
+	}
+	
+	@Test
+	public void givenMultipleContact_WhenAdded_ShouldSyncWithDB() throws AddressBookException {
+		ContactDetails[] contactArray = {
+				new ContactDetails("Nikhil", "Baireddy", "NelaKondapalli", "Khammam", "Telangana", 514526, 986354874,
+						"nikil@gmail.com"),
+				new ContactDetails("Naveen", "Pothuri", "Meena vati Nagar", "Darsi", "Andhra Pradesh", 562543, 987456320,
+						"nani9876@gmail.com") };
+		addressBook.addMultipleContactsToDBUsingThreads(Arrays.asList(contactArray));
+		boolean result1 = addressBook.checkUpdatedRecordSyncWithDB("Nikhil");
+		boolean result2 = addressBook.checkUpdatedRecordSyncWithDB("Naveen");
+		Assert.assertTrue(result1);
+		Assert.assertTrue(result2);
 	}
 }
