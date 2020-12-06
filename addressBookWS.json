@@ -1,0 +1,26 @@
+{
+  "addressBookWS": [
+    {
+      "id": 1,
+      "firstname": "Sreekar",
+      "lastname": "Pothuri",
+      "address": "Bramhan's Bazar",
+      "city": "Ponnur",
+      "state": "Andhra Pradesh",
+      "zip": "522124",
+      "phone": "8790613438",
+      "email": "pothuri98@gmail.com"
+    },
+    {
+      "id": 2,
+      "firstname": "Sai Kumar",
+      "lastname": "Kedari",
+      "address": "Kasukuru Road",
+      "city": "Ponnur",
+      "state": "Andhra Pradesh",
+      "zip": "522124",
+      "phone": "9874563210",
+      "email": "saikv@gmail.com"
+    }
+  ]
+}
