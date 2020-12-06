@@ -1,7 +1,9 @@
 package com.blz.addressBook;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,11 +11,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -60,6 +64,11 @@ public class AddressBookService {
 			addDataToFile(firstName, lastName, address, city, state, phoneNum, zip, email, addressBookName);
 			try {
 				addDataToCSVFile(addressBookName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				addDataToJSONFile(addressBookName);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -254,7 +263,7 @@ public class AddressBookService {
 	public void addDataToCSVFile(String addressBookName) throws IOException {
 		System.out.println("Enter name for csv file to add data: ");
 		String fileName = sc.nextLine();
-		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\" + fileName + ".csv");
+		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".csv");
 
 		if (Files.notExists(filePath))
 			Files.createFile(filePath);
@@ -282,7 +291,8 @@ public class AddressBookService {
 		String fileName = sc.nextLine();
 		CSVReader reader = null;
 		try {
-			reader = new CSVReader(new FileReader("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\" + fileName + ".csv"));
+			reader = new CSVReader(
+					new FileReader("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".csv"));
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				for (String token : nextLine) {
@@ -292,6 +302,37 @@ public class AddressBookService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void addDataToJSONFile(String addressBookName) throws IOException {
+		System.out.println("Enter name for json file to add data : ");
+		String fileName = sc.nextLine();
+		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".json");
+		Gson gson = new Gson();
+		String json = gson.toJson(contactList);
+		FileWriter writer = new FileWriter(String.valueOf(filePath));
+		writer.write(json);
+		writer.close();
+	}
+
+	public void readDataFromJsonFile() throws FileNotFoundException {
+		System.out.println("Enter Json filename to read data: ");
+		String fileName = sc.nextLine();
+		Path filePath = Paths.get("F:\\BridgeLabz Fellowship Program\\FilesIncluded\\AddressBook\\" + fileName + ".json");
+		Gson gson = new Gson();
+		BufferedReader br = new BufferedReader(new FileReader(String.valueOf(filePath)));
+		ContactDetails[] data = gson.fromJson(br, ContactDetails[].class);
+		List<ContactDetails> lst = Arrays.asList(data);
+		for (ContactDetails details : contactList) {
+			System.out.println("Firstname : " + details.firstName);
+			System.out.println("Lastname : " + details.lastName);
+			System.out.println("Address : " + details.address);
+			System.out.println("City : " + details.city);
+			System.out.println("State : " + details.state);
+			System.out.println("Zip : " + details.zip);
+			System.out.println("Phone no : " + details.phoneNum);
+			System.out.println("Email : " + details.email);
 		}
 	}
 }
