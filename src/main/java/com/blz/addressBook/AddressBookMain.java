@@ -60,7 +60,7 @@ public class AddressBookMain {
 			System.out.println("1.Add Contact \n2.Edit Existing Contact \n3.Delete Contact "
 					+ "\n4.Add Multiple Contacts \n5.Search By City or State \n6.View By City or State"
 					+ "\n7.Count By City or State \n8.Sort Contacts Alphabetically \n9.Sort Contacts By City,State or Zip"
-					+ "\n10.Read or Write into File \n11.Read or write Data into CSV File \n12.Exit");
+					+ "\n10.Read or Write into File \n11.Read or write Data into CSV File \n 12. Read or write Data into JSON File \n13.Exit");
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
@@ -179,6 +179,18 @@ public class AddressBookMain {
 				}
 				break;
 			case 12:
+				System.out.println("1)Read Data From JSON File   2)Add Contact To JSON File");
+				int selection = sc.nextInt();
+				if (selection == 1) {
+					addressBook.readDataFromJsonFile();
+				} else if (selection == 2) {
+					addressBook.addContact(addressBookName);
+					System.out.println("Successfully Added to JSON File!!");
+				} else {
+					System.out.println("Choose correct option");
+				}
+				break;
+			case 13:
 				System.out.println("Exited to main menu!!");
 				addAddressBook();
 				break;
@@ -186,7 +198,7 @@ public class AddressBookMain {
 				System.out.println("Choose correct option from above mentioned option only!!");
 				break;
 			}
-		} while (choice != 12);
+		} while (choice != 13);
 	}
 
 	public static void main(String[] args) throws IOException {
